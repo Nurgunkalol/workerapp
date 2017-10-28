@@ -1,0 +1,28 @@
+﻿<h2>Сотрудники</h2>
+<button type="button" class="btn btn-default" (click)="add()">Добавить</button>
+<!--<error-handler [error]="error"></error-handler>-->
+<table *ngIf="content" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Имя</th>
+            <th>Дата поступления</th>
+            <th>Группа</th>
+            <th>Базовая ставка</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let worker of content">
+            <td>{{worker.id}}</td>
+            <td>{{worker.name}}</td>
+            <td>{{worker.entryWorkDate | date: 'dd.MM.yyyy'}}</td>
+            <td>{{Group[worker.group]}}</td>
+            <td>{{worker.baseRate}}</td>
+            <td>
+                <button class="btn btn-default" (click)="edit(worker.id)">Редактировать</button>
+                <button class="btn btn-default" (click)="delete(worker.id)">Удалить</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

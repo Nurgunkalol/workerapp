@@ -6,28 +6,32 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
-import { HomeComponent } from './components/home/home.component';
-import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
-import { CounterComponent } from './components/counter/counter.component';
+import { WorkerListComponent } from './components/worker/list.component';
+import { WorkerEditComponent } from './components/worker/edit.component';
+import { ModelValidatorComponent } from './components/worker/model-validator.component';
+
+import { WorkerService } from './services/worker.service';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavMenuComponent,
-        CounterComponent,
-        FetchDataComponent,
-        HomeComponent
+        WorkerListComponent,
+        WorkerEditComponent,
+        ModelValidatorComponent
+    ],
+    providers: [
+        WorkerService
     ],
     imports: [
         CommonModule,
         HttpModule,
         FormsModule,
         RouterModule.forRoot([
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', component: HomeComponent },
-            { path: 'counter', component: CounterComponent },
-            { path: 'fetch-data', component: FetchDataComponent },
-            { path: '**', redirectTo: 'home' }
+            { path: '', redirectTo: 'worker', pathMatch: 'full' },
+            { path: 'worker', component: WorkerListComponent },
+            { path: 'worker/:id', component: WorkerEditComponent },
+            { path: '**', redirectTo: 'worker' }
         ])
     ]
 })

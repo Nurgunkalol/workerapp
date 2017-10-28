@@ -9,25 +9,48 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using WorkersApp.Data;
+using Newtonsoft.Json.Serialization;
+using WorkersApp.Services;
+using WorkersApp.Infrastructure;
+using AutoMapper;
 
 namespace WorkersApp
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfigurationRoot Configuration { get; set; }
+
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables();
+  
+            Configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-        }
+            var connection = Configuration.GetConnectionString("DefaultConnection");
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            services.AddDbContext<WorkersContext>(options =>
+            options.UseSqlite(connection));
+
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver =  new CamelCasePropertyNamesContractResolver();
+            });
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+            {
+                AutoMapperConfig.Register(cfg);
+            });
+            var mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
+            services.AddScoped<IWorkerRepository, WorkerRepository>();
+        }
+        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

@@ -1,28 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace WorkersApp.Entities
 {
-    public class WorkersContext : DbContext
-    {
-        public DbSet<Worker> Workers { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Data Source=workers.db");
-        }
-    }
-
     public class Worker
     {
-        public int PersonId { get; set; }
+        [Key]
+        public int Id { get; set; }
+        [StringLength(100)]
         public string Name { get; set; }
         public Group Group { get; set; }
         public DateTime EntryWorkDate { get; set; }
-        public double BaseRate { get; set; }
+        public decimal BaseRate { get; set; }
+        public Worker Chief { get; set; }        
+        public int? ChiefId { get; set; }
     }
 
     public enum Group
