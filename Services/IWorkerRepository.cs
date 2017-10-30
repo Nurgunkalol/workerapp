@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WorkersApp.Entities;
+using System;
 
 namespace WorkersApp.Services
 {
@@ -14,5 +15,6 @@ namespace WorkersApp.Services
         void CreateSubordinate(int workerId, int newSubId);
         void Post(Worker dataEventRecord);
         void Put(int id, [FromBody] Worker dataEventRecord);
+        decimal GetWorkerSalary(int id, DateTime date);
     }
 }
