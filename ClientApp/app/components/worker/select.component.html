@@ -1,0 +1,4 @@
+﻿<select class="form-control" [ngModel]="newSubId" (ngModelChange)="newSubIdChange($event)">
+    <option [ngValue]="null" selected="selected">Не выбран</option>
+    <option [ngValue]="worker.id" *ngFor="let worker of workers">{{ worker.name }} </option>
+</select>

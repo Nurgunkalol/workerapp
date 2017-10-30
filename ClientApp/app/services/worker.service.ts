@@ -29,6 +29,30 @@ export class WorkerService {
             .catch(this.handleError);
     }
 
+    getSubordinates(id: number): Promise<Worker[]> {
+        const url = `${this.workerUrl}/subordinates/${id}`;
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response.json() as Worker[])
+            .catch(this.handleError);
+    }
+
+    getPotentialSubordinates(id: number): Promise<Worker[]> {
+        const url = `${this.workerUrl}/potentialsubs/${id}`;
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response.json() as Worker[])
+            .catch(this.handleError);
+    }
+
+    createSubordinate(workerId: number, newSubId: number): Promise<void> {
+        const url = `${this.workerUrl}/createsub/${workerId}/${newSubId}`;
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response.json() as Worker[])
+            .catch(this.handleError);
+    }
+
     updateWorker(worker: Worker): Promise<Worker> {
         const url = `${this.workerUrl}/${worker.id}`;
         return this.http.put(url, JSON.stringify(worker), { headers: this.headers })

@@ -28,7 +28,26 @@ namespace WorkersApp.Services
             return worker;
         }
 
-        [HttpPost]
+        public List<Worker> GetSubordinates(int id)
+        {
+            var subordinates = _context.Workers.Where(w => w.ChiefId == id).ToList();
+            return subordinates;
+        }
+
+        public List<Worker> GetPotentialSubordinates(int id)
+        {
+            var worker = _context.Workers.FirstOrDefault(t => t.Id == id);
+            var potentialSubs = _context.Workers.Where(w => w.Id != worker.Id && w.Id != worker.ChiefId && w.ChiefId != worker.Id).ToList();
+            return potentialSubs;
+        }
+
+        public void CreateSubordinate(int workerId, int newSubId)
+        {
+            var worker = Get(newSubId);
+            worker.ChiefId = workerId;
+            _context.SaveChanges();
+        }
+
         public void Post(Worker worker)
         {
             _context.Workers.Add(worker);

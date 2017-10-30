@@ -25,9 +25,10 @@ namespace WorkersApp.Controllers
         }
 
         [HttpGet("")]
-        public IList<Worker> GetWorkers()
+        public IEnumerable<WorkerViewModel> GetWorkers()
         {
-            return _workerRepository.GetAll();
+            var workers = _workerRepository.GetAll();
+            return _mapper.Map<List<Worker>, List<WorkerViewModel>>(workers);
         }
 
         [HttpGet("{id}")]
@@ -35,6 +36,26 @@ namespace WorkersApp.Controllers
         {
             var worker = _workerRepository.Get(id);
             return _mapper.Map<Worker, WorkerViewModel>(worker);
+        }
+
+        [HttpGet("subordinates/{id}")]
+        public IEnumerable<WorkerViewModel> GetSubordinates(int id)
+        {
+            var subordinates = _workerRepository.GetSubordinates(id);
+            return _mapper.Map<List<Worker>, List<WorkerViewModel>>(subordinates);
+        }
+
+        [HttpGet("potentialsubs/{id}")]
+        public IEnumerable<WorkerViewModel> GetPotentialSubordinates(int id)
+        {
+            var subordinates = _workerRepository.GetPotentialSubordinates(id);
+            return _mapper.Map<List<Worker>, List<WorkerViewModel>>(subordinates);
+        }
+
+        [HttpGet("createsub/{workerId}/{newSubId}")]
+        public void CreateSubordinate(int workerId, int newSubId)
+        {
+            _workerRepository.CreateSubordinate(workerId, newSubId);
         }
 
         [HttpPost]

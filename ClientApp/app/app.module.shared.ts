@@ -9,6 +9,7 @@ import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { WorkerListComponent } from './components/worker/list.component';
 import { WorkerEditComponent } from './components/worker/edit.component';
 import { ModelValidatorComponent } from './components/worker/model-validator.component';
+import { WorkerSelectComponent } from './components/worker/select.component';
 
 import { WorkerService } from './services/worker.service';
 
@@ -18,7 +19,8 @@ import { WorkerService } from './services/worker.service';
         NavMenuComponent,
         WorkerListComponent,
         WorkerEditComponent,
-        ModelValidatorComponent
+        ModelValidatorComponent,
+        WorkerSelectComponent
     ],
     providers: [
         WorkerService

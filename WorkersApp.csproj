@@ -29,11 +29,13 @@
   <ItemGroup>
     <None Remove="ClientApp\app\components\worker\edit.component.ts" />
     <None Remove="ClientApp\app\components\worker\model-validator.component.ts" />
+    <None Remove="ClientApp\app\components\worker\select.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\app\components\worker\edit.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\components\worker\model-validator.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\components\worker\select.component.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

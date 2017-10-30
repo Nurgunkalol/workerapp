@@ -1,8 +1,8 @@
-﻿<h2>Добавить сотрудника</h2>
+﻿<h2>Сотрудник</h2>
 <form class="form-horizontal" *ngIf="worker" (ngSubmit)="onSubmit()">
     <button type="submit" class="btn btn-primary">Сохранить</button>
     <button type="button" class="btn btn-default" (click)="cancel()">Назад</button>
-    <error-handler [error]="error"></error-handler>
+    <!--<error-handler [error]="error"></error-handler>-->
     <div class="form-group">
         <label for="name" class="col-sm-2 control-label">Имя</label>
         <div class="col-sm-10">
@@ -19,9 +19,15 @@
     </div>
     <div class="form-group">
         <label for="group" class="col-sm-2 control-label">Группа</label>
-        <div class="col-sm-10">
+        <div class="col-sm-10" *ngIf="!worker.id">
             <select class="form-control" [(ngModel)]="worker.group" id="group" name="group">
                 <option *ngFor="let key of groupSelect" [ngValue]="key" [label]="groupWorkers[key]"></option>
+            </select>
+            <model-validator [model]="error?.modelState?.group"></model-validator>
+        </div>
+        <div class="col-sm-10" *ngIf="worker.id">
+            <select class="form-control" [(ngModel)]="worker.group" id="group" name="group">
+                <option *ngFor="let key of groupSelect" [ngValue]="groupWorkers[worker.group]" [label]="groupWorkers[key]"></option>
             </select>
             <model-validator [model]="error?.modelState?.group"></model-validator>
         </div>
@@ -34,3 +40,40 @@
         </div>
     </div>
 </form>
+
+<div *ngIf="worker && worker.id && subordinates">
+    <h3>Сотрудники в подчинении</h3>
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="chiefId">Выбрать сотрудника в подчинение</label>
+            <div class="select-container">
+                <worker-select id="chiefId" [(chiefId)]="worker.id" (selectedNewSubId)="handleSubId($event)"></worker-select>
+            </div>
+            <button type="button" class="btn btn-default" (click)="addSubordination()">Добавить</button>
+        </div>
+        
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Имя</th>
+                <th>Группа</th>
+                <th>Базовая ставка</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let sub of subordinates">
+                <td>{{sub.id}}</td>
+                <td>{{sub.name}}</td>
+                <td>{{groupWorkers[sub.group]}}</td>
+                <td>{{sub.baseRate}}</td>
+                <td>
+                    <button class="btn btn-default" (click)="deleteSubordination(sub.id)">Удалить</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

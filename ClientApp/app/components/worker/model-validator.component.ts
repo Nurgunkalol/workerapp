@@ -2,7 +2,7 @@
 
 @Component({
     selector: 'model-validator',
-    template: require('./model-validator.component.html')
+    templateUrl: './model-validator.component.html'
 })
 
 export class ModelValidatorComponent {
