@@ -1,5 +1,5 @@
 # workerapp
-Для запуска:
+Start: 
 git clone https://github.com/Nurgunkalol/workerapp.git
 npm install
-сменить значение DefaultConnection в appsettings.json 
+change DefaultConnection value in appsettings.json
