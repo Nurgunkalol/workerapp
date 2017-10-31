@@ -24,4 +24,20 @@ namespace WorkersApp.REST.Models
         public WorkerViewModel Chief { get; set; }
         public int? ChiefId { get; set; }
     }
+
+    public class WorkerSalaryViewModel
+    {
+        public int Id { get; set; }
+        public DateTime Date { get; set; }
+    }
+
+    public class StatusViewModel
+    {
+        public bool Success { get; set; }
+
+        public StatusViewModel(bool success)
+        {
+            Success = success;
+        }
+    }
 }

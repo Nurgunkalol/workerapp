@@ -9,6 +9,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 export class WorkerListComponent {
     content: Worker[] = [];
     Group: typeof Group = Group;
+    allSalary: number = 0;
 
     constructor(private workerService: WorkerService,
         private router: Router,
@@ -39,5 +40,9 @@ export class WorkerListComponent {
     delete(id: number): void {
         this.workerService.deleteWorker(id).then(() => this.getWorkers());
                  //   error => this.error = error.json() as Error))
+    }
+
+    getAllSalary(): void {
+        this.workerService.getAllSalary().then(allSalary => this.allSalary = allSalary);
     }
 }

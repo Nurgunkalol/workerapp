@@ -1,6 +1,13 @@
 ﻿<h2>Сотрудники</h2>
 <button type="button" class="btn btn-default" (click)="add()">Добавить</button>
-<!--<error-handler [error]="error"></error-handler>-->
+<div class="input-group">
+    <span class="input-group-btn">
+        <button class="btn btn-default" type="button" (click)="getAllSalary()">Подсчет зарплат!</button>
+    </span>
+    <div class="col-xs-4">
+        <input type="text" class="form-control" [(ngModel)]="allSalary" readonly="readonly">
+    </div>
+</div>
 <table *ngIf="content" class="table table-bordered table-striped">
     <thead>
         <tr>

@@ -53,6 +53,14 @@ export class WorkerService {
             .catch(this.handleError);
     }
 
+    deleteSubordinate(subId: number): Promise<void> {
+        const url = `${this.workerUrl}/deletesub/${subId}`;
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response.json() as Worker[])
+            .catch(this.handleError);
+    }
+
     updateWorker(worker: Worker): Promise<Worker> {
         const url = `${this.workerUrl}/${worker.id}`;
         return this.http.put(url, JSON.stringify(worker), { headers: this.headers })
@@ -73,6 +81,26 @@ export class WorkerService {
         return this.http.delete(url)
             .toPromise()
             .then(() => null)
+            .catch(this.handleError);
+    }
+
+    getAllSalary(): Promise<number> {
+        const url = `${this.workerUrl}/allsalary`;
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response.json() as number)
+            .catch(this.handleError);
+    }
+
+    getWorkerSalary(id: number, date: Date): Promise<number> {
+        const url = `${this.workerUrl}/salary`;
+        let config = {
+            id: id,
+            date: date
+        };
+        return this.http.post(url, JSON.stringify(config), { headers: this.headers })
+            .toPromise()
+            .then(response => response.json() as number)
             .catch(this.handleError);
     }
 

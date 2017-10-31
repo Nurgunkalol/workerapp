@@ -53,9 +53,29 @@ namespace WorkersApp.Controllers
         }
 
         [HttpGet("createsub/{workerId}/{newSubId}")]
-        public void CreateSubordinate(int workerId, int newSubId)
+        public StatusViewModel CreateSubordinate(int workerId, int newSubId)
         {
             _workerRepository.CreateSubordinate(workerId, newSubId);
+            return new StatusViewModel(true);
+        }
+
+        [HttpGet("deletesub/{subId}")]
+        public StatusViewModel DeleteSubordinate(int subId)
+        {
+            _workerRepository.DeleteSubordinate(subId);
+            return new StatusViewModel(true);
+        }
+
+        [HttpGet("allsalary")]
+        public decimal GetAllSalary()
+        {
+            return _workerRepository.GetAllSalary();
+        }
+
+        [HttpPost("salary")]
+        public decimal GetWorkerSalary([FromBody] WorkerSalaryViewModel workerSalary)
+        {
+            return _workerRepository.GetWorkerSalary(workerSalary.Id, workerSalary.Date);
         }
 
         [HttpPost]

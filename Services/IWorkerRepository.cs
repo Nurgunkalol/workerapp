@@ -16,5 +16,7 @@ namespace WorkersApp.Services
         void Post(Worker dataEventRecord);
         void Put(int id, [FromBody] Worker dataEventRecord);
         decimal GetWorkerSalary(int id, DateTime date);
+        decimal GetAllSalary();
+        void DeleteSubordinate(int subId);
     }
 }

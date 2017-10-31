@@ -12,7 +12,9 @@ export class WorkerEditComponent implements OnInit {
     groupWorkers = Group;
     groupSelect: string[] = [];
     newSubId: number = 0;
+    salary: number = 0;
     error: Error;
+    date = new Date();
 
     constructor(private workerService: WorkerService, private route: ActivatedRoute) { }
 
@@ -37,7 +39,8 @@ export class WorkerEditComponent implements OnInit {
         if (id === 0) {
             return;
         } else {
-            this.workerService.getSubordinates(id).then(subordinates => this.subordinates = subordinates, error => this.error = error.json() as Error)
+            if (this.worker.group !== 1)
+                this.workerService.getSubordinates(id).then(subordinates => this.subordinates = subordinates, error => this.error = error.json() as Error)
         }
     }
 
@@ -58,6 +61,10 @@ export class WorkerEditComponent implements OnInit {
         this.saveWorker();
     }
 
+    deleteSub(subId: number): void {
+        this.workerService.deleteSubordinate(subId).then(() => this.getSubordinates(this.worker.id), error => this.error = error.json() as Error);
+    }
+
     saveWorker(): void {
         console.log(this.worker);
         if (this.worker.id) {
@@ -65,5 +72,11 @@ export class WorkerEditComponent implements OnInit {
         } else {
             this.workerService.createWorker(this.worker).then(() => this.cancel(), error => this.error = error.json() as Error);
         }
+    }
+
+    getWorkerSalary(): void {
+        this.workerService.getWorkerSalary(this.worker.id, this.date).then(salary => {
+            this.salary = salary
+        });
     }
 }

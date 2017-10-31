@@ -20,8 +20,8 @@ namespace WorkersApp.Entities
 
     public enum Group
     {
-        Employee,
-        Manager,
-        Salesman
+        Employee = 1,
+        Manager = 2,
+        Salesman = 3
     }
 }

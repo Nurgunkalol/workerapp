@@ -37,7 +37,7 @@ namespace WorkersApp.Services
         public List<Worker> GetPotentialSubordinates(int id)
         {
             var worker = _context.Workers.FirstOrDefault(t => t.Id == id);
-            var potentialSubs = _context.Workers.Where(w => w.Id != worker.Id && w.Id != worker.ChiefId && w.ChiefId != worker.Id).ToList();
+            var potentialSubs = _context.Workers.Where(w => w.Id != worker.Id && w.Id != worker.ChiefId && w.ChiefId != worker.Id && w.ChiefId == null).ToList();
             return potentialSubs;
         }
 
@@ -45,6 +45,13 @@ namespace WorkersApp.Services
         {
             var worker = Get(newSubId);
             worker.ChiefId = workerId;
+            _context.SaveChanges();
+        }
+
+        public void DeleteSubordinate(int subId)
+        {
+            var sub = Get(subId);
+            sub.ChiefId = null;
             _context.SaveChanges();
         }
 
@@ -67,6 +74,18 @@ namespace WorkersApp.Services
                 return;
             _context.Workers.Remove(worker);
             _context.SaveChanges();
+        }
+
+        public decimal GetAllSalary()
+        {
+            var workers = GetAll();
+            decimal result = 0;
+            var today = DateTime.Today;
+            workers.ForEach(worker =>
+            {
+                result += GetWorkerSalary(worker.Id, today);
+            });
+            return result;
         }
 
         public decimal GetWorkerSalary(int id, DateTime date)
